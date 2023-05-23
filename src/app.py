@@ -19,7 +19,7 @@ access_token = os.environ["GITHUB_ACCESS_TOKEN"]
 g = Github(access_token)
 
 # Загрузка модели и создание классификатора
-model_path = "models/RoBERTa/RoBERTa_best_model"
+model_path = "models/RoBERTa/RoBERTa_best_model/"
 tokenizer = AutoTokenizer.from_pretrained(model_path)
 model = AutoModelForSequenceClassification.from_pretrained(model_path)
 if cuda.is_available():
