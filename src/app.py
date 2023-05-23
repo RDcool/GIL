@@ -19,10 +19,9 @@ access_token = os.environ["GITHUB_ACCESS_TOKEN"]
 g = Github(access_token)
 
 # Загрузка модели и создание классификатора
-tokenizer = AutoTokenizer.from_pretrained("roberta-base")
-model = AutoModelForSequenceClassification.from_pretrained(pretrained_model_name_or_path=
-                                                           "src/models/RoBERTa/RoBERTa_best_model",
-                                                           local_files_only=True)
+model_path = "src/models/RoBERTa/RoBERTa_best_model"
+tokenizer = AutoTokenizer.from_pretrained(model_path, local_files_only=True)
+model = AutoModelForSequenceClassification.from_pretrained(model_path, local_files_only=True)
 if cuda.is_available():
     classifier = pipeline("text-classification", model=model, tokenizer=tokenizer, device=0)
 else:
