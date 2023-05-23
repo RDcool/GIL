@@ -1,4 +1,3 @@
-from dotenv import dotenv_values
 from github import Github, UnknownObjectException
 from utils.link_proccessing import link_to_issue_data
 from utils.markdown_processsing import markdown_to_text
@@ -7,20 +6,20 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipe
 from dash import Dash, html, dcc, Input, Output, State
 
 
+import os
 import re
 import pandas as pd
 import plotly.express as px
 import dash_bootstrap_components as dbc
 
 # Загрузка .env файла
-config = dotenv_values(".env")
 
 # Получение доступа к GitHub API
-access_token = config["access_token"]
+access_token = os.environ["GITHUB_ACCESS_TOKEN"]
 g = Github(access_token)
 
 # Загрузка модели и создание классификатора
-model_path = config["model"]
+model_path = os.environ["MODEL"]
 tokenizer = AutoTokenizer.from_pretrained(model_path)
 model = AutoModelForSequenceClassification.from_pretrained(model_path)
 if cuda.is_available():
@@ -165,4 +164,4 @@ def show_markdown_and_plot(btn, link):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=False)
+    app.run_server(host="0.0.0.0", port="8000", debug=False)
